@@ -21,13 +21,12 @@
 	- [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) ($2.99)
 - 在 Telegram 联系 [BotFather](https://t.me/botfather)，使用 `/newbot` 指令新建一个 bot
 
-## 快速配置方法
+## 懒人超快安装法
 1. 安装上述 app
-2. 启动 Termux，执行 `pkg install git && pkg install nodejs`
-3. `git clone https://github.com/Astrian/termux-deilveryreader` 或者 `git clone https://gitlab.com/Astrian/termux-deilveryreader`
-4. `cd termux-deilveryreader && npm install && npm run initial`，根据屏幕提示完成初始化
-5. 在 Tasker 中分别建立两个任务：一个是收到短信时执行 Termux `db-recivesms` 脚本，另一个是到某个地理位置或连接某个 Wi-Fi 之后执行 Termux `db-sendreminder` 脚本
-6. 准备收快递吧
+2. 启动 Termux，执行 `pkg install curl && sh -c "$(curl -fsSL https://raw.github.com/Astrian/termux-deilveryreader/master/install.sh)"`
+3. 根据屏幕提示完成初始化
+4. 在 Tasker 中分别建立两个任务：一个是收到短信时执行 Termux `db-recivesms` 脚本，另一个是到某个地理位置或连接某个 Wi-Fi 之后执行 Termux `db-sendreminder` 脚本
+5. 准备收快递吧
 
 ## 手动配置方法
 1. 安装上述 app
