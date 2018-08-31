@@ -11,6 +11,7 @@ sync(function* (api) {
   input = yield readSyncByRl('是否帮你部署 Tasker 脚本？\n输入 y 确认，输入其他字符串跳过：').then((res) => { api.next(null, res) })
   if (input === 'y') yield setScript(api.next)
   console.log(' ')
+  console.log('完成！')
 })
 
 function readSyncByRl(tips) {
