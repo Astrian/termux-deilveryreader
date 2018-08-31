@@ -1,7 +1,8 @@
 const readline = require('readline')
+const Process = require('child_process')
 const sync = require('sync_back')({ debug: true })
 const fs = require('fs')
-let request = require('request')
+const request = require('request')
 
 sync(function* (api) {
   let input = yield readSyncByRl('是否执行 Telegram 配置程序？\n输入 y 确认，输入其他字符串跳过：').then((res) => { api.next(null, res) })
@@ -102,13 +103,11 @@ function setTelegram(callback) {sync(function* (api) {
 })}
 
 function setScript(callback) {sync(function* (api) {
-  let file
-  file = fs.existsSync('~/.termux')
-  if (!file) fs.mkdirSync('~/.termux')
-  file = fs.existsSync('~/.termux/tasker')
-  if (!file) fs.mkdirSync('~/.termux/tasker')
-  fs.writeFileSync('~/.termux/tasker/db-recivesms', `cd ~/termux-deilveryreader && npm run recive`)
-  fs.writeFileSync('~/.termux/tasker/db-sendreminder', `cd ~/termux-deilveryreader && npm run send`)
-  console.log('脚本写入完成！请到 Tasker 新建带 Termux 插件的任务。')
+  let res
+  try { res = yield Process.exec('ls -A ~', (error, stdout, stderr) => { api.next(error, { stdout, stderr}) })} catch(e) {console.log(e.Error); return; }
+  if (res.stdout.indexOf('.termux') === -1) try { yield Process.exec('mkdir ~/.termux', (error, stdout, stderr) => { api.next(error, { stdout, stderr}) })} catch(e) {console.log(e.Error); return; }
+  try { res = yield Process.exec('ls ~/.termux', (error, stdout, stderr) => { api.next(error, { stdout, stderr}) })} catch(e) {console.log(e.Error); return; }
+  if (res.stdout.indexOf('tasker') === -1) try { yield Process.exec('mkdir ~/.termux/tasker', (error, stdout, stderr) => { api.next(error, { stdout, stderr}) })} catch(e) {console.log(e.Error); return; }
+  try { res = yield Process.exec('echo "cd ~/termux-deilveryreader && npm run recive" > ~/.termux/tasker/db-recivesms && echo "cd ~/termux-deilveryreader && npm run send" > ~/.termux/tasker/db-sendreminder', (error, stdout, stderr) => { api.next(error, { stdout, stderr}) })} catch(e) {console.log(e.Error); return; }
   callback(null, null)
 })}
