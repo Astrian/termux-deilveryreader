@@ -2,8 +2,8 @@ let request = require('request')
 let debug = require('debug')('send:send.js')
 let fs = require('fs')
 let data = fs.readFileSync('deilveryData')
-let botToken = require('config.js').telegram.bot_token
-let tgId = require('config.js').telegram.user_id
+let botToken = require('./config').telegram.bot_token
+let tgId = require('./config').telegram.user_id
 debug(data.toString())
 if (data.toString() === '') return
 debug('new line')
