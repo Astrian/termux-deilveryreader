@@ -1,1 +1,1 @@
-cd ~/termux-deilveryreader && npm run recive
+cd ~/termux-deilveryreader && npm run recive && exit
