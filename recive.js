@@ -7,7 +7,6 @@ process.exec('termux-sms-list -l 1', (error, stdout, stderr) => {
     return
 	}
   let newSMS = JSON.parse(stdout)[0]
-  newSMS.body = '【丰巢】您的快递24h未领，关注丰巢智能柜微信绑定取件手机，激活取件码『25779634』后至嘉朗湖畔13座架空层丰巢智能快递柜领取快递，派件员电话13517654377。'
   let code = 0, position, company
   if (newSMS.body.match(/【丰巢】/g)) {
     if (newSMS.body.match(/您的快递24h未领/g)) {
