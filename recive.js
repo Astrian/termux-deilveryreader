@@ -7,7 +7,7 @@ process.exec('termux-sms-list -l 1', (error, stdout, stderr) => {
     return
 	}
   let newSMS = JSON.parse(stdout)[0]
-  let code, position, company
+  let code = false, position, company
   if (newSMS.body.match(/【丰巢】/g)) {
     code = newSMS.body.match(/[0-9]{8}/g)[0]
     position = newSMS.body.match(/至.*取/g)[0].slice(1, -1)
