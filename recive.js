@@ -7,7 +7,7 @@ process.exec('termux-sms-list -l 1', (error, stdout, stderr) => {
     return
 	}
   let newSMS = JSON.parse(stdout)[0]
-  let code = false, position, company
+  let code = 0, position, company
   if (newSMS.body.match(/【丰巢】/g)) {
     code = newSMS.body.match(/[0-9]{8}/g)[0]
     position = newSMS.body.match(/至.*取/g)[0].slice(1, -1)
@@ -17,7 +17,7 @@ process.exec('termux-sms-list -l 1', (error, stdout, stderr) => {
     position = newSMS.body.match(/到.*取/g)[0].slice(1, -1)
     company = newSMS.body.match(/取.*包裹/g)[0].slice(1, -2)
   }
-  if (!code) return
+  if (code === 0) return
   let data = fs.readFileSync('deilveryData')
   debug(data.toString())
   fs.writeFile('deilveryData', data.toString() + `👉 来自 ${company} 的取件码为 ${code} 包裹，请到 ${position} 领取\n`,  (err)=> {
